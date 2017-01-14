@@ -1,5 +1,14 @@
 <header class="header">
   <h1 class="header__title">Weather PWA</h1>
-  <button id="butRefresh" class="headerButton" aria-label="Refresh"></button>
-  <button id="butAdd" class="headerButton" aria-label="Add"></button>
+  <!--<input type="text" #myInput> refs in angular2-->
+  <button id="butRefresh"
+          class="headerButton"
+          aria-label="Refresh"
+          (mouseup)="onMouseUp($event)"
+          ></button>
+  <button id="butAdd"
+          class="headerButton"
+          aria-label="Add"
+          (mouseup)="onMouseUp($event)"
+          ></button>
 </header>

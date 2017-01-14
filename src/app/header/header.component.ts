@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  onMouseUp(e) {
+    console.log('clicked ', e);
+  }
+
   constructor() { }
 
   ngOnInit() {
