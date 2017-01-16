@@ -5,6 +5,209 @@ export class ForecastService {
 
   forecast = 'weather forecast for today!';
 
-  constructor() { }
+  app: any = {
+    isLoading: true,
+    visibleCards: {},
+    selectedCities: [],
+    spinner: document.querySelector('.loader'),
+    cardTemplate: document.querySelector('.cardTemplate'),
+    container: document.querySelector('.main'),
+    addDialog: document.querySelector('.dialog-container'),
+    daysOfWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  };
 
+  /*****************************************************************************
+   *
+   * Methods to update/refresh the UI
+   *
+   ****************************************************************************/
+
+  // Toggles the visibility of the add new city dialog.
+  toggleAddDialog(visible) {
+    if (visible) {
+      this.app.addDialog.classList.add('dialog-container--visible');
+    } else {
+      this.app.addDialog.classList.remove('dialog-container--visible');
+    }
+  };
+
+  // Updates a weather card with the latest weather forecast. If the card
+  // doesn't already exist, it's cloned from the template.
+  updateForecastCard(data) {
+    var dataLastUpdated = new Date(data.created);
+    var sunrise = data.channel.astronomy.sunrise;
+    var sunset = data.channel.astronomy.sunset;
+    var current = data.channel.item.condition;
+    var humidity = data.channel.atmosphere.humidity;
+    var wind = data.channel.wind;
+
+    var card = this.app.visibleCards[data.key];
+    if (!card) {
+      card = this.app.cardTemplate.cloneNode(true);
+      card.classList.remove('cardTemplate');
+      card.querySelector('.location').textContent = data.label;
+      card.removeAttribute('hidden');
+      this.app.container.appendChild(card);
+      this.app.visibleCards[data.key] = card;
+    }
+
+    // Verifies the data provide is newer than what's already visible
+    // on the card, if it's not bail, if it is, continue and update the
+    // time saved in the card
+    var cardLastUpdatedElem = card.querySelector('.card-last-updated');
+    var cardLastUpdated = cardLastUpdatedElem.textContent;
+    if (cardLastUpdated) {
+      cardLastUpdated = new Date(cardLastUpdated);
+      // Bail if the card has more recent data then the data
+      if (dataLastUpdated.getTime() < cardLastUpdated.getTime()) {
+        return;
+      }
+    }
+    cardLastUpdatedElem.textContent = data.created;
+
+    card.querySelector('.description').textContent = current.text;
+    card.querySelector('.date').textContent = current.date;
+    card.querySelector('.current .icon').classList.add(this.getIconClass(current.code));
+    card.querySelector('.current .temperature .value').textContent =
+      Math.round(current.temp);
+    card.querySelector('.current .sunrise').textContent = sunrise;
+    card.querySelector('.current .sunset').textContent = sunset;
+    card.querySelector('.current .humidity').textContent =
+      Math.round(humidity) + '%';
+    card.querySelector('.current .wind .value').textContent =
+      Math.round(wind.speed);
+    card.querySelector('.current .wind .direction').textContent = wind.direction;
+    var nextDays = card.querySelectorAll('.future .oneday');
+    var todaysDate = new Date();
+    var today = todaysDate.getDay();
+    for (var i = 0; i < 7; i++) {
+      var nextDay = nextDays[i];
+      var daily = data.channel.item.forecast[i];
+      if (daily && nextDay) {
+        nextDay.querySelector('.date').textContent =
+          this.app.daysOfWeek[(i + this.app.today) % 7];
+        nextDay.querySelector('.icon').classList.add(this.getIconClass(daily.code));
+        nextDay.querySelector('.temp-high .value').textContent =
+          Math.round(daily.high);
+        nextDay.querySelector('.temp-low .value').textContent =
+          Math.round(daily.low);
+      }
+    }
+    if (this.app.isLoading) {
+      this.app.spinner.setAttribute('hidden', true);
+      this.app.container.removeAttribute('hidden');
+      this.app.isLoading = false;
+    }
+  };
+
+  /*
+   * Gets a forecast for a specific city and updates the card with the data.
+   * getForecast() first checks if the weather data is in the cache. If so,
+   * then it gets that data and populates the card with the cached data.
+   * Then, getForecast() goes to the network for fresh data. If the network
+   * request goes through, then the card gets updated a second time with the
+   * freshest data.
+   */
+  getForecast(key, label, initialWeatherForecast) {
+    var statement = 'select * from weather.forecast where woeid=' + key;
+    var url = 'https://query.yahooapis.com/v1/public/yql?format=json&q=' +
+        statement,
+        context = this;
+
+    // Fetch the latest data.
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+      if (request.readyState === XMLHttpRequest.DONE) {
+        if (request.status === 200) {
+          var response = JSON.parse(request.response);
+          var results = response.query.results;
+          results.key = key;
+          results.label = label;
+          results.created = response.query.created;
+          context.updateForecastCard(results);
+        }
+      } else {
+        // Return the initial weather forecast since no data is available.
+        context.updateForecastCard(initialWeatherForecast);
+      }
+    };
+    request.open('GET', url);
+    request.send();
+  };
+
+  // Iterate all of the cards and attempt to get the latest forecast data
+  updateForecasts() {
+    var keys = Object.keys(this.app.visibleCards);
+    keys.forEach(function(key) {
+      this.getForecast(key);
+    });
+  };
+
+  // TODO add saveSelectedCities function here
+
+  getIconClass(weatherCode) {
+    // Weather codes: https://developer.yahoo.com/weather/documentation.html#codes
+    weatherCode = parseInt(weatherCode);
+    switch (weatherCode) {
+      case 25: // cold
+      case 32: // sunny
+      case 33: // fair (night)
+      case 34: // fair (day)
+      case 36: // hot
+      case 3200: // not available
+        return 'clear-day';
+      case 0: // tornado
+      case 1: // tropical storm
+      case 2: // hurricane
+      case 6: // mixed rain and sleet
+      case 8: // freezing drizzle
+      case 9: // drizzle
+      case 10: // freezing rain
+      case 11: // showers
+      case 12: // showers
+      case 17: // hail
+      case 35: // mixed rain and hail
+      case 40: // scattered showers
+        return 'rain';
+      case 3: // severe thunderstorms
+      case 4: // thunderstorms
+      case 37: // isolated thunderstorms
+      case 38: // scattered thunderstorms
+      case 39: // scattered thunderstorms (not a typo)
+      case 45: // thundershowers
+      case 47: // isolated thundershowers
+        return 'thunderstorms';
+      case 5: // mixed rain and snow
+      case 7: // mixed snow and sleet
+      case 13: // snow flurries
+      case 14: // light snow showers
+      case 16: // snow
+      case 18: // sleet
+      case 41: // heavy snow
+      case 42: // scattered snow showers
+      case 43: // heavy snow
+      case 46: // snow showers
+        return 'snow';
+      case 15: // blowing snow
+      case 19: // dust
+      case 20: // foggy
+      case 21: // haze
+      case 22: // smoky
+        return 'fog';
+      case 24: // windy
+      case 23: // blustery
+        return 'windy';
+      case 26: // cloudy
+      case 27: // mostly cloudy (night)
+      case 28: // mostly cloudy (day)
+      case 31: // clear (night)
+        return 'cloudy';
+      case 29: // partly cloudy (night)
+      case 30: // partly cloudy (day)
+      case 44: // partly cloudy
+        return 'partly-cloudy-day';
+    }
+  };
+
+  constructor() { }
 }
