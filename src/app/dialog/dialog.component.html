@@ -2,7 +2,7 @@
   <div class="dialog">
     <div class="dialog-title">Add new city</div>
     <div class="dialog-body">
-      <select id="selectCityToAdd">
+      <select id="selectCityToAdd" [(ngModel)]="city">
         <!-- Values map to Yahoo Weather API Where On Earth Identifiers (WOEIDs).
              https://developer.yahoo.com/weather/documentation.html#req -->
         <option value="2357536">Austin, TX</option>

@@ -11,6 +11,9 @@ export class DialogComponent implements OnInit {
 
   ngOnInit() {}
 
+  city: string = '';
+  cityText: string = '';
+
   onMouseUp(e) {
     let eventId = e.target.id;
 
@@ -25,11 +28,19 @@ export class DialogComponent implements OnInit {
   }
 
   addCity(e) {
-    console.log(e);
+    // Add the newly selected city
+    var key = this.city;
+    var label = this.cityText;
+    console.log(e, key, label);
+    this.forecast.getForecast(key, label, this.forecast.initialWeatherForecast);
+    this.forecast.toggleAddDialog(false);
   }
 
   addCancel(e) {
     console.log(e);
+
+    // Close the add new city dialog
+    this.forecast.toggleAddDialog(false);
   }
 
 }

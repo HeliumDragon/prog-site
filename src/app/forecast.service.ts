@@ -2,19 +2,61 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ForecastService {
-
-  forecast = 'weather forecast for today!';
-
-  app: any = {
-    isLoading: true,
-    visibleCards: {},
-    selectedCities: [],
-    spinner: document.querySelector('.loader'),
-    cardTemplate: document.querySelector('.cardTemplate'),
-    container: document.querySelector('.main'),
-    addDialog: document.querySelector('.dialog-container'),
-    daysOfWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  /*
+   * Fake weather data that is presented when the user first uses the app,
+   * or when the user has not saved any cities. See startup code for more
+   * discussion.
+   */
+  initialWeatherForecast: any = {
+    key: '2459115',
+    label: 'New York, NY',
+    created: '2016-07-22T01:00:00Z',
+    channel: {
+      astronomy: {
+        sunrise: "5:43 am",
+        sunset: "8:21 pm"
+      },
+      item: {
+        condition: {
+          text: "Windy",
+          date: "Thu, 21 Jul 2016 09:00 PM EDT",
+          temp: 56,
+          code: 24
+        },
+        forecast: [
+          {code: 44, high: 86, low: 70},
+          {code: 44, high: 94, low: 73},
+          {code: 4, high: 95, low: 78},
+          {code: 24, high: 75, low: 89},
+          {code: 24, high: 89, low: 77},
+          {code: 44, high: 92, low: 79},
+          {code: 44, high: 89, low: 77}
+        ]
+      },
+      atmosphere: {
+        humidity: 56
+      },
+      wind: {
+        speed: 25,
+        direction: 195
+      }
+    }
   };
+
+  app: any = null;
+
+  init() {
+    this.app = {
+      isLoading: true,
+      visibleCards: {},
+      selectedCities: [],
+      spinner: document.querySelector('.loader'),
+      cardTemplate: document.querySelector('.cardTemplate'),
+      container: document.querySelector('.main'),
+      addDialog: document.querySelector('.dialog-container'),
+      daysOfWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    }
+  }
 
   /*****************************************************************************
    *
@@ -108,7 +150,7 @@ export class ForecastService {
    * request goes through, then the card gets updated a second time with the
    * freshest data.
    */
-  getForecast(key, label, initialWeatherForecast) {
+  getForecast(key: any, label?: any, initialWeatherForecast?: any) {
     var statement = 'select * from weather.forecast where woeid=' + key;
     var url = 'https://query.yahooapis.com/v1/public/yql?format=json&q=' +
         statement,
@@ -128,7 +170,7 @@ export class ForecastService {
         }
       } else {
         // Return the initial weather forecast since no data is available.
-        context.updateForecastCard(initialWeatherForecast);
+        context.updateForecastCard(context.initialWeatherForecast);
       }
     };
     request.open('GET', url);
@@ -137,9 +179,10 @@ export class ForecastService {
 
   // Iterate all of the cards and attempt to get the latest forecast data
   updateForecasts() {
-    var keys = Object.keys(this.app.visibleCards);
+    var keys = Object.keys(this.app.visibleCards),
+        context = this;
     keys.forEach(function(key) {
-      this.getForecast(key);
+      context.getForecast(key);
     });
   };
 

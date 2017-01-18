@@ -8,7 +8,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   onMouseUp(e) {
-    console.log('clicked ', e.target.id);
     let eventId = e.target.id;
 
     switch(eventId) {
