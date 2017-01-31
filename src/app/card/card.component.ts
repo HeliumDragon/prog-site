@@ -6,7 +6,6 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./card.component.css']
 })
 export class CardComponent implements OnInit {
-  @Input() key;
   @Input() location;
   @Input() date;
   @Input() description;
@@ -16,7 +15,7 @@ export class CardComponent implements OnInit {
   @Input() sunrise;
   @Input() sunset;
   @Input() windSpeed;
-  @Input() windDirection;
+  @Input() windDegree;
 
   ngOnInit() {
 

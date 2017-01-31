@@ -14,40 +14,15 @@ export class ForecastService {
    * discussion.
    */
   initialWeatherForecast: any = {
-    key: '2459115',
-    label: 'New York, NY',
-    created: '2016-07-22T01:00:00Z',
-    channel: {
-      astronomy: {
-        sunrise: "5:43 am",
-        sunset: "8:21 pm"
-      },
-      item: {
-        condition: {
-          text: "Windy",
-          date: "Thu, 21 Jul 2016 09:00 PM EDT",
-          temp: 56,
-          code: 24
-        },
-        forecast: [
-          {code: 44, high: 86, low: 70},
-          {code: 44, high: 94, low: 73},
-          {code: 4, high: 95, low: 78},
-          {code: 24, high: 75, low: 89},
-          {code: 24, high: 89, low: 77},
-          {code: 44, high: 92, low: 79},
-          {code: 44, high: 89, low: 77}
-        ]
-      },
-      atmosphere: {
-        humidity: 56
-      },
-      wind: {
-        speed: 25,
-        direction: 195
-      }
+    "_id": 5128581,
+    "name": "New York",
+    "country": "US",
+    "coord": {
+      "lon":-74.005966,"lat":40.714272
     }
   };
+
+  private APIKEY = '43a769687cef63e57ed3444c97d17529';
 
   app: any = null;
 
@@ -115,7 +90,8 @@ export class ForecastService {
 
     card.querySelector('.description').textContent = current.text;
     card.querySelector('.date').textContent = current.date;
-    card.querySelector('.current .icon').classList.add(this.getIconClass(current.code));
+    // TODO sort out icons
+    //card.querySelector('.current .icon').classList.add(this.getIconClass(current.code));
     card.querySelector('.current .temperature .value').textContent =
       Math.round(current.temp);
     card.querySelector('.current .sunrise').textContent = sunrise;
@@ -134,7 +110,9 @@ export class ForecastService {
       if (daily && nextDay) {
         nextDay.querySelector('.date').textContent =
           this.app.daysOfWeek[(i + this.app.today) % 7];
-        nextDay.querySelector('.icon').classList.add(this.getIconClass(daily.code));
+
+        // TODO sort out icons
+        //nextDay.querySelector('.icon').classList.add(this.getIconClass(daily.code));
         nextDay.querySelector('.temp-high .value').textContent =
           Math.round(daily.high);
         nextDay.querySelector('.temp-low .value').textContent =
@@ -156,10 +134,8 @@ export class ForecastService {
    * request goes through, then the card gets updated a second time with the
    * freshest data.
    */
-  getForecast(key: any, label?: any) {
-    let statement = 'select * from weather.forecast where woeid=' + key;
-    let url = 'https://query.yahooapis.com/v1/public/yql?format=json&q=' +
-        statement,
+  getForecast(key: any, name?: any) {
+    let url = 'http://api.openweathermap.org/data/2.5/weather?id=' + key + '&units=metric&APPID=' + this.APIKEY,
         context = this;
 
     // Fetch and return the latest data.
@@ -178,8 +154,8 @@ export class ForecastService {
 
   extractData(response: Response) {
     let body = response.json();
-
-    return body.query.results.channel || {};
+    
+    return body || {};
   }
 
   // Iterate all of the cards and attempt to get the latest forecast data
@@ -189,72 +165,6 @@ export class ForecastService {
     keys.forEach(function(key) {
       context.getForecast(key);
     });
-  };
-
-  // TODO add saveSelectedCities function here
-
-  getIconClass(weatherCode) {
-    // Weather codes: https://developer.yahoo.com/weather/documentation.html#codes
-    weatherCode = parseInt(weatherCode);
-    switch (weatherCode) {
-      case 25: // cold
-      case 32: // sunny
-      case 33: // fair (night)
-      case 34: // fair (day)
-      case 36: // hot
-      case 3200: // not available
-        return 'clear-day';
-      case 0: // tornado
-      case 1: // tropical storm
-      case 2: // hurricane
-      case 6: // mixed rain and sleet
-      case 8: // freezing drizzle
-      case 9: // drizzle
-      case 10: // freezing rain
-      case 11: // showers
-      case 12: // showers
-      case 17: // hail
-      case 35: // mixed rain and hail
-      case 40: // scattered showers
-        return 'rain';
-      case 3: // severe thunderstorms
-      case 4: // thunderstorms
-      case 37: // isolated thunderstorms
-      case 38: // scattered thunderstorms
-      case 39: // scattered thunderstorms (not a typo)
-      case 45: // thundershowers
-      case 47: // isolated thundershowers
-        return 'thunderstorms';
-      case 5: // mixed rain and snow
-      case 7: // mixed snow and sleet
-      case 13: // snow flurries
-      case 14: // light snow showers
-      case 16: // snow
-      case 18: // sleet
-      case 41: // heavy snow
-      case 42: // scattered snow showers
-      case 43: // heavy snow
-      case 46: // snow showers
-        return 'snow';
-      case 15: // blowing snow
-      case 19: // dust
-      case 20: // foggy
-      case 21: // haze
-      case 22: // smoky
-        return 'fog';
-      case 24: // windy
-      case 23: // blustery
-        return 'windy';
-      case 26: // cloudy
-      case 27: // mostly cloudy (night)
-      case 28: // mostly cloudy (day)
-      case 31: // clear (night)
-        return 'cloudy';
-      case 29: // partly cloudy (night)
-      case 30: // partly cloudy (day)
-      case 44: // partly cloudy
-        return 'partly-cloudy-day';
-    }
   };
 
   constructor(private http: Http) { }

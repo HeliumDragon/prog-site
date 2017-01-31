@@ -23,11 +23,11 @@ export class AppComponent {
     this.search$
       .subscribe(forecast => this.getCity(forecast));
 
-    this.getCity(this.forecastService.initialWeatherForecast.key);
+    this.getCity(this.forecastService.initialWeatherForecast._id);
   }
 
-  getCity(key: string, label?: string) {
-    this.forecastService.getForecast(key, label || '')
+  getCity(key: string, name?: string) {
+    this.forecastService.getForecast(key, name || '')
       .subscribe(results => this.cards.push(results));
   }
 
