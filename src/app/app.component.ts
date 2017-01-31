@@ -1,4 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -6,10 +9,27 @@ import { Component, OnInit, Inject } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(@Inject('forecast') private forecast) {}
+  @ViewChild(DialogComponent)private dialog: DialogComponent;
+  cards: Array<string>;
+  search$ = new Subject<string>();
+
 
   ngOnInit() {
-    this.forecast.init();
-    this.forecast.updateForecastCard(this.forecast.initialWeatherForecast);
+    let key, label;
+    this.forecastService.init();
+
+    this.cards = [];
+
+    this.search$
+      .subscribe(forecast => this.getCity(forecast));
+
+    this.getCity(this.forecastService.initialWeatherForecast.key);
   }
+
+  getCity(key: string, label?: string) {
+    this.forecastService.getForecast(key, label || '')
+      .subscribe(results => this.cards.push(results));
+  }
+
+  constructor(@Inject('forecast') private forecastService) {}
 }

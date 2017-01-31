@@ -5,7 +5,21 @@
   </h1>
 
   <main class="main">
-    <app-card></app-card>
+    <div *ngFor="let card of cards">
+      <app-card [key]="card.key"
+                [location]="card.location.city"
+                [date]="card.item.condition.date"
+                [description]="card.description"
+                [temperature]="card.item.condition.temp"
+                [humidity]="card.atmosphere.humidity"
+                [iconCode]="card.item.condition.code"
+                [sunrise]="card.astronomy.sunrise"
+                [sunset]="card.astronomy.sunset"
+                [windSpeed]="card.wind.speed"
+                [windDirection]="card.wind.direction"
+                >
+      </app-card>
+    </div>
   </main>
 
   <app-dialog></app-dialog>

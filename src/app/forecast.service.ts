@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
 
+import { Observable } from 'rxjs/Observable';
+import { Http, Response } from '@angular/http';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+
 @Injectable()
 export class ForecastService {
   /*
@@ -150,32 +156,31 @@ export class ForecastService {
    * request goes through, then the card gets updated a second time with the
    * freshest data.
    */
-  getForecast(key: any, label?: any, initialWeatherForecast?: any) {
-    var statement = 'select * from weather.forecast where woeid=' + key;
-    var url = 'https://query.yahooapis.com/v1/public/yql?format=json&q=' +
+  getForecast(key: any, label?: any) {
+    let statement = 'select * from weather.forecast where woeid=' + key;
+    let url = 'https://query.yahooapis.com/v1/public/yql?format=json&q=' +
         statement,
         context = this;
 
-    // Fetch the latest data.
-    var request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-      if (request.readyState === XMLHttpRequest.DONE) {
-        if (request.status === 200) {
-          var response = JSON.parse(request.response);
-          var results = response.query.results;
-          results.key = key;
-          results.label = label;
-          results.created = response.query.created;
-          context.updateForecastCard(results);
+    // Fetch and return the latest data.
+    return this.http.get(url)
+      .map((response: Response) => {
+        if (this.app.isLoading) {
+          this.app.spinner.setAttribute('hidden', true);
+          this.app.container.removeAttribute('hidden');
+          this.app.isLoading = false;
         }
-      } else {
-        // Return the initial weather forecast since no data is available.
-        context.updateForecastCard(context.initialWeatherForecast);
-      }
-    };
-    request.open('GET', url);
-    request.send();
+
+        return context.extractData(response);
+      })
+      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   };
+
+  extractData(response: Response) {
+    let body = response.json();
+
+    return body.query.results.channel || {};
+  }
 
   // Iterate all of the cards and attempt to get the latest forecast data
   updateForecasts() {
@@ -252,5 +257,5 @@ export class ForecastService {
     }
   };
 
-  constructor() { }
+  constructor(private http: Http) { }
 }

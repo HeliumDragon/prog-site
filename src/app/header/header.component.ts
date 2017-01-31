@@ -1,11 +1,11 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   onMouseUp(e) {
     let eventId = e.target.id;
@@ -31,9 +31,4 @@ export class HeaderComponent implements OnInit {
   };
 
   constructor(@Inject('forecast') private forecast) {}
-
-  ngOnInit() {
-    console.log('header init');
-  }
-
 }
