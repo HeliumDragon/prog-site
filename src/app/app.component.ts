@@ -16,20 +16,20 @@ export class AppComponent {
 
   ngOnInit() {
     let key, label;
-    this.forecastService.init();
+    this.userService.init();
 
     this.cards = [];
 
     this.search$
       .subscribe(forecast => this.getCity(forecast));
 
-    this.getCity(this.forecastService.initialWeatherForecast._id);
+    this.getCity(this.userService.initialUser._id);
   }
 
   getCity(key: string, name?: string) {
-    this.forecastService.getForecast(key, name || '')
+    this.userService.getForecast(key, name || '')
       .subscribe(results => this.cards.push(results));
   }
 
-  constructor(@Inject('forecast') private forecastService) {}
+  constructor(@Inject('user') private userService) {}
 }

@@ -1,21 +1,13 @@
 <div class="container">
   <app-header></app-header>
-  <h1>
-    {{title}}
-  </h1>
 
   <main class="main">
     <div *ngFor="let card of cards">
-      <app-card [location]="card.name"
-                [description]="card.weather[0].description"
-                [iconCode]="card.weather[0].icon"
-                [date]="card.dt"
-                [temperature]="card.main.temp"
-                [humidity]="card.main.humidity"
-                [sunrise]="card.sys.sunrise"
-                [sunset]="card.sys.sunset"
-                [windSpeed]="card.wind.speed"
-                [windDegree]="card.wind.deg"
+      <app-card [name]="card.name"
+                [location]="card.location"
+                [bio]="card.bio"
+                [avatar]="card.avatar_url"
+                [date]="card.created_at"
                 >
       </app-card>
     </div>

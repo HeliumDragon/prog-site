@@ -1,24 +1,16 @@
-<div class="card cardTemplate weather-forecast">
+<div class="card cardTemplate user-details">
     <div class="card-last-updated"></div>
+    <div class="name">{{name}}</div>
     <div class="location">{{location}}</div>
-    <div class="date">{{date+'000' | date}}</div>
-    <div class="description">{{description}}</div>
+    <div class="date">{{date | date}}</div>
+    <div class="bio">{{bio}}</div>
     <div class="current">
       <div class="visual">
-        <div class="icon"><img src="http://openweathermap.org/img/w/{{iconCode}}.png" [alt]="description"/></div>
-        <div class="temperature">
-          <span class="value">{{temperature}}</span><span class="scale">°C</span>
-        </div>
+        <div class="icon"><img src="{{avatar}}" [alt]="description"/></div>
       </div>
       <div class="description">
-        <div class="humidity">{{humidity}}</div>
-        <div class="wind">
-          <span class="value">{{windSpeed}}</span>
-          <span class="scale">m/s</span>
-          <span class="direction">{{windDegree}}</span>°
-        </div>
-        <div class="sunrise">{{sunrise+'000' | date: 'HH:mm Z'}}</div>
-        <div class="sunset">{{sunset+'000' | date: 'HH:mm Z'}}</div>
+        <!--<div class="sunrise">{{sunrise+'000' | date: 'HH:mm Z'}}</div>
+        <div class="sunset">{{sunset+'000' | date: 'HH:mm Z'}}</div>-->
       </div>
     </div>
     <!--<div class="future">

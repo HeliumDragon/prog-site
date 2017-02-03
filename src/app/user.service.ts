@@ -3,26 +3,50 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Http, Response } from '@angular/http';
 
+import { User } from './user';
+
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
 @Injectable()
-export class ForecastService {
+export class UserService {
   /*
-   * Fake weather data that is presented when the user first uses the app,
+   * Default Github user data that is presented when the user first uses the app,
    * or when the user has not saved any cities. See startup code for more
    * discussion.
    */
-  initialWeatherForecast: any = {
-    "_id": 5128581,
-    "name": "New York",
-    "country": "US",
-    "coord": {
-      "lon":-74.005966,"lat":40.714272
-    }
+  initialUser: User = {
+    login: "octocat",
+    id: 1,
+    avatar_url: "https://github.com/images/error/octocat_happy.gif",
+    gravatar_id: "",
+    url: "https://api.github.com/users/octocat",
+    html_url: "https://github.com/octocat",
+    followers_url: "https://api.github.com/users/octocat/followers",
+    following_url: "https://api.github.com/users/octocat/following{/other_user}",
+    gists_url: "https://api.github.com/users/octocat/gists{/gist_id}",
+    starred_url: "https://api.github.com/users/octocat/starred{/owner}{/repo}",
+    subscriptions_url: "https://api.github.com/users/octocat/subscriptions",
+    organizations_url: "https://api.github.com/users/octocat/orgs",
+    repos_url: "https://api.github.com/users/octocat/repos",
+    events_url: "https://api.github.com/users/octocat/events{/privacy}",
+    received_events_url: "https://api.github.com/users/octocat/received_events",
+    type: "User",
+    site_admin: false,
+    name: "monalisa octocat",
+    company: "GitHub",
+    blog: "https://github.com/blog",
+    location: "San Francisco",
+    email: "octocat@github.com",
+    hireable: false,
+    bio: "There once was...",
+    public_repos: 2,
+    public_gists: 1,
+    followers: 20,
+    following: 0,
+    created_at: "2008-01-14T04:33:35Z",
+    updated_at: "2008-01-14T04:33:35Z"
   };
-
-  private APIKEY = '43a769687cef63e57ed3444c97d17529';
 
   app: any = null;
 
@@ -135,8 +159,9 @@ export class ForecastService {
    * freshest data.
    */
   getForecast(key: any, name?: any) {
-    let url = 'http://api.openweathermap.org/data/2.5/weather?id=' + key + '&units=metric&APPID=' + this.APIKEY,
-        context = this;
+    //let url = 'http://api.openweathermap.org/data/2.5/weather?id=' + key + '&units=metric&APPID=' + this.APIKEY,
+      let context = this;
+      let url = 'https://api.github.com/users/jDman';
 
     // Fetch and return the latest data.
     return this.http.get(url)
@@ -154,7 +179,7 @@ export class ForecastService {
 
   extractData(response: Response) {
     let body = response.json();
-    
+
     return body || {};
   }
 

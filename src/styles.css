@@ -42,3 +42,8 @@ body {
       -ms-flex-line-pack: stretch;
           align-content: stretch;
   background: #ececec; }
+
+img {
+  width: 100%;
+  min-height: auto;
+}

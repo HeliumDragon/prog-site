@@ -6,6 +6,7 @@ import { Component, Inject } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  title: string = 'Github Users PWA'
 
   onMouseUp(e) {
     let eventId = e.target.id;
@@ -22,13 +23,13 @@ export class HeaderComponent {
 
   refresh () {
     // Refresh all of the forecasts
-    this.forecast.updateForecasts();
+    this.userService.updateForecasts();
   };
 
   add() {
     // Open/show the add new city dialog
-    this.forecast.toggleAddDialog(true);
+    this.userService.toggleAddDialog(true);
   };
 
-  constructor(@Inject('forecast') private forecast) {}
+  constructor(@Inject('user') private userService) {}
 }
