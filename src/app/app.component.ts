@@ -10,24 +10,24 @@ import { DialogComponent } from './dialog/dialog.component';
 })
 export class AppComponent {
   @ViewChild(DialogComponent)private dialog: DialogComponent;
+
   cards: Array<string>;
+
   search$ = new Subject<string>();
 
-
   ngOnInit() {
-    let key, label;
     this.userService.init();
 
     this.cards = [];
 
     this.search$
-      .subscribe(forecast => this.getCity(forecast));
+      .subscribe(forecast => this.getUser(forecast));
 
-    this.getCity(this.userService.initialUser._id);
+    this.getUser(this.userService.initialUser.login);
   }
 
-  getCity(key: string, name?: string) {
-    this.userService.getForecast(key, name || '')
+  getUser(username: string, name?: string) {
+    this.userService.getUser(username, name || '')
       .subscribe(results => this.cards.push(results));
   }
 

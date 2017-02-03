@@ -2,13 +2,20 @@
     <div class="card-last-updated"></div>
     <div class="name">{{name}}</div>
     <div class="location">{{location}}</div>
-    <div class="date">{{date | date}}</div>
-    <div class="bio">{{bio}}</div>
     <div class="current">
       <div class="visual">
         <div class="icon"><img src="{{avatar}}" [alt]="description"/></div>
       </div>
       <div class="description">
+        <div class="date">
+          Since: {{date | date: 'MM/yyyy'}}
+        </div>
+
+        <div class="company">
+          Company: {{company}}
+        </div>
+
+        <div class="bio">{{bio}}</div>
         <!--<div class="sunrise">{{sunrise+'000' | date: 'HH:mm Z'}}</div>
         <div class="sunset">{{sunset+'000' | date: 'HH:mm Z'}}</div>-->
       </div>
