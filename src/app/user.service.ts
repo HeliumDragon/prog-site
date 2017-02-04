@@ -111,7 +111,7 @@ export class UserService {
   }
 
   // Iterate all of the cards and attempt to get the latest forecast data
-  updateForecasts() {
+  updateUsers() {
     var keys = Object.keys(this.app.visibleCards),
         context = this;
     keys.forEach(function(key) {

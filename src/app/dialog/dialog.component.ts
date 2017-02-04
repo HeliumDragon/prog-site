@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject, Output } from '@angular/core';
 
+import { UserService } from '../user.service';
+
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
@@ -46,8 +48,8 @@ export class DialogComponent implements OnInit {
     console.log(e);
 
     // Close the add new city dialog
-    //this.forecastService.toggleAddDialog(false);
+    this.userService.toggleAddDialog(false);
   }
 
-  constructor() { }
+  constructor(@Inject('user') private userService) { }
 }
