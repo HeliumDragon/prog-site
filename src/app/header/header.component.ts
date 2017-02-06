@@ -23,7 +23,7 @@ export class HeaderComponent {
 
   refresh () {
     // Refresh all of the forecasts
-    this.userService.updateForecasts();
+    this.userService.updateUsers();
   };
 
   add() {

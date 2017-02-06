@@ -41,7 +41,8 @@ body {
   -webkit-align-content: stretch;
       -ms-flex-line-pack: stretch;
           align-content: stretch;
-  background: #ececec; }
+  background: #ececec;
+  overflow-y: auto }
 
 img {
   width: 100%;

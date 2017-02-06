@@ -1,52 +1,41 @@
-import { Component, OnInit, Inject, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 
 import { UserService } from '../user.service';
+
+import { User } from '../user';
 
 @Component({
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
   styleUrls: ['./dialog.component.css']
 })
-export class DialogComponent implements OnInit {
-  ngOnInit() {}
+export class DialogComponent {
+  @Output() addUser = new EventEmitter<string>();
 
-  city: string = '';
-  cityText: string = '';
+  user: string = '';
 
   onMouseUp(e) {
     let eventId = e.target.id;
 
     switch(eventId) {
       case 'butAddCity':
-        this.addCity(e);
+        this.add(e);
         break;
       case 'butAddCancel':
-        this.addCancel(e);
+        this.cancel(e);
         break;
     }
   }
 
-  addCity(e) {
+  add(e) {
     // Add the newly selected city
-
-    //this.city$
-    //  .subscribe(city => this.getCity(city));
-
-    //this.forecast.getForecast(key, label, this.forecast.initialWeatherForecast);
-    //this.forecastService.toggleAddDialog(false);
+    console.log(e, this.user);
+    this.addUser.emit(this.user);
+    //this.userService.getForecast(this.user);
+    this.userService.toggleAddDialog(false);
   }
 
-  getCity(city: string) {
-    console.log(city);
-    let key = this.city;
-    let label = this.cityText;
-    // this.forecastService.getForecast(key, label, this.forecastService.initialWeatherForecast)
-    //   .subscribe(results => this.cards = results);
-  }
-
-  addCancel(e) {
-    console.log(e);
-
+  cancel(e) {
     // Close the add new city dialog
     this.userService.toggleAddDialog(false);
   }

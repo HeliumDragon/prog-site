@@ -3,6 +3,8 @@ import { Subject } from 'rxjs/Subject';
 
 import { DialogComponent } from './dialog/dialog.component';
 
+import { User } from './user';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,7 +13,7 @@ import { DialogComponent } from './dialog/dialog.component';
 export class AppComponent {
   @ViewChild(DialogComponent)private dialog: DialogComponent;
 
-  cards: Array<string>;
+  cards: Array<User>;
 
   search$ = new Subject<string>();
 
@@ -26,9 +28,20 @@ export class AppComponent {
     this.getUser(this.userService.initialUser.login);
   }
 
-  getUser(username: string, name?: string) {
-    this.userService.getUser(username, name || '')
-      .subscribe(results => this.cards.push(results));
+  onAddUser(user) {
+    this.getUser(user);
+  }
+
+  getUser(username: string): Array<User> {
+    return this.userService.getUser(username)
+      .subscribe(results => {
+        let uniqUsers = this.cards.every(item => {
+          return item.id !== results.id;
+        });
+
+        if (uniqUsers)
+          return this.cards.push(results);
+      });
   }
 
   constructor(@Inject('user') private userService) {}
