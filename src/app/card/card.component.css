@@ -78,28 +78,6 @@
   .user-details .icon {
     background-repeat: no-repeat;
     background-size: contain; }
-  .user-details .icon.clear-day {
-    background-image: url("/images/clear.png"); }
-  .user-details .icon.clear-night {
-    background-image: url("/images/clear.png"); }
-  .user-details .icon.rain {
-    background-image: url("/images/rain.png"); }
-  .user-details .icon.snow {
-    background-image: url("/images/snow.png"); }
-  .user-details .icon.sleet {
-    background-image: url("/images/sleet.png"); }
-  .user-details .icon.windy {
-    background-image: url("/images/wind.png"); }
-  .user-details .icon.fog {
-    background-image: url("/images/fog.png"); }
-  .user-details .icon.cloudy {
-    background-image: url("/images/cloudy.png"); }
-  .user-details .icon.partly-cloudy-day {
-    background-image: url("/images/partly-cloudy.png"); }
-  .user-details .icon.partly-cloudy-night {
-    background-image: url("/images/partly-cloudy.png"); }
-  .user-details .icon.thunderstorms {
-    background-image: url("/images/thunderstorm.png"); }
 
   @media (max-width: 450px) {
   .user-details .date, .user-details .description {
