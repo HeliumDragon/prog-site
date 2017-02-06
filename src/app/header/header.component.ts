@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,7 +6,9 @@ import { Component, Inject } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  title: string = 'Github Users PWA'
+  @Output() onRefresh = new EventEmitter<boolean>();
+
+  title: string = 'Github Users PWA';
 
   onMouseUp(e) {
     let eventId = e.target.id;
@@ -23,7 +25,8 @@ export class HeaderComponent {
 
   refresh () {
     // Refresh all of the forecasts
-    this.userService.updateUsers();
+    this.onRefresh.emit(true);
+    //this.userService.updateUsers();
   };
 
   add() {

@@ -1,5 +1,5 @@
 <div class="container">
-  <app-header></app-header>
+  <app-header (onRefresh)="onRefresh($event)"></app-header>
 
   <main class="main">
     <div *ngFor="let card of cards">

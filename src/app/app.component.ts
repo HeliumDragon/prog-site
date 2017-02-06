@@ -1,7 +1,5 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-
-import { DialogComponent } from './dialog/dialog.component';
 
 import { User } from './user';
 
@@ -11,17 +9,13 @@ import { User } from './user';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @ViewChild(DialogComponent)private dialog: DialogComponent;
-
-  cards: Array<User>;
+  cards: Array<User> = [];
 
   search$ = new Subject<string>();
 
   ngOnInit() {
     this.userService.init();
-
-    this.cards = [];
-
+    
     this.search$
       .subscribe(forecast => this.getUser(forecast));
 
@@ -30,6 +24,27 @@ export class AppComponent {
 
   onAddUser(user) {
     this.getUser(user);
+  }
+
+  onRefresh(refresh) {
+    if (refresh)
+      this.updateUsers();
+  };
+
+  // Iterate all of the cards and attempt to get the latest user data
+  updateUsers() {
+    let cards = this.cards;
+
+    cards.forEach((user, index) => {
+      let updatedUser = this.getFreshUserData(user.login)
+        .subscribe(result => {
+          cards[index] = result;
+        });
+    }, this);
+  };
+
+  getFreshUserData(username: string): Subject<User> {
+    return this.userService.getUser(username)
   }
 
   getUser(username: string): Array<User> {

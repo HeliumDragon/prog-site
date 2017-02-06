@@ -28,15 +28,13 @@ export class DialogComponent {
   }
 
   add(e) {
-    // Add the newly selected city
-    console.log(e, this.user);
+    // Add the newly selected user
     this.addUser.emit(this.user);
-    //this.userService.getForecast(this.user);
     this.userService.toggleAddDialog(false);
   }
 
   cancel(e) {
-    // Close the add new city dialog
+    // Close the add new user dialog
     this.userService.toggleAddDialog(false);
   }
 

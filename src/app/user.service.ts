@@ -53,7 +53,6 @@ export class UserService {
   init() {
     this.app = {
       isLoading: true,
-      visibleCards: {},
       selectedCities: [],
       spinner: document.querySelector('.loader'),
       cardTemplate: document.querySelector('.cardTemplate'),
@@ -109,15 +108,6 @@ export class UserService {
 
     return body || {};
   }
-
-  // Iterate all of the cards and attempt to get the latest forecast data
-  updateUsers() {
-    var keys = Object.keys(this.app.visibleCards),
-        context = this;
-    keys.forEach(function(key) {
-      context.getUser(key);
-    });
-  };
 
   constructor(private http: Http) { }
 }
