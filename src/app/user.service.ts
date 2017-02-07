@@ -12,8 +12,7 @@ import 'rxjs/add/operator/catch';
 export class UserService {
   /*
    * Default Github user data that is presented when the user first uses the app,
-   * or when the user has not saved any cities. See startup code for more
-   * discussion.
+   * or when the user has not saved any users.
    */
   initialUser: User = {
     login: "octocat",
@@ -64,7 +63,7 @@ export class UserService {
 
   /*****************************************************************************
    *
-   * Methods to update/refresh the UI
+   * Methods to update the UI
    *
    ****************************************************************************/
 
@@ -78,12 +77,7 @@ export class UserService {
   };
 
   /*
-   * Gets a forecast for a specific city and updates the card with the data.
-   * getUser() first checks if the weather data is in the cache. If so,
-   * then it gets that data and populates the card with the cached data.
-   * Then, getUser() goes to the network for fresh data. If the network
-   * request goes through, then the card gets updated a second time with the
-   * freshest data.
+   * Gets a user for a specific Github account.
    */
   getUser(username: any, name?: any) {
     let context = this,
