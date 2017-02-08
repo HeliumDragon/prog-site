@@ -7,6 +7,7 @@ import { User } from './user';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class UserService {
@@ -17,7 +18,7 @@ export class UserService {
   initialUser: User = {
     login: "octocat",
     id: 1,
-    avatar_url: "https://github.com/images/error/octocat_happy.gif",
+    avatar_url: "https://avatars.githubusercontent.com/u/583231?v=3",
     gravatar_id: "",
     url: "https://api.github.com/users/octocat",
     html_url: "https://github.com/octocat",
@@ -32,19 +33,19 @@ export class UserService {
     received_events_url: "https://api.github.com/users/octocat/received_events",
     type: "User",
     site_admin: false,
-    name: "monalisa octocat",
+    name: "The Octocat",
     company: "GitHub",
     blog: "https://github.com/blog",
     location: "San Francisco",
     email: "octocat@github.com",
     hireable: false,
-    bio: "There once was...",
+    bio: "",
     public_repos: 2,
     public_gists: 1,
     followers: 20,
     following: 0,
-    created_at: "2008-01-14T04:33:35Z",
-    updated_at: "2008-01-14T04:33:35Z"
+    created_at: "2011-01-14T04:33:35Z",
+    updated_at: "2011-01-14T04:33:35Z"
   };
 
   app: any = null;
@@ -52,12 +53,9 @@ export class UserService {
   init() {
     this.app = {
       isLoading: true,
-      selectedCities: [],
       spinner: document.querySelector('.loader'),
-      cardTemplate: document.querySelector('.cardTemplate'),
       container: document.querySelector('.main'),
       addDialog: document.querySelector('.dialog-container'),
-      daysOfWeek: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     }
   }
 
@@ -79,25 +77,33 @@ export class UserService {
   /*
    * Gets a user for a specific Github account.
    */
-  getUser(username: any, name?: any) {
+  getUser(username: any, initial?: any) {
+    if (initial) {
+      this.stopLoadSpinner();
+      return Observable.of(this.initialUser);
+    }
     let context = this,
         url = 'https://api.github.com/users/' + username;
 
     // Fetch and return the latest data.
     return this.http.get(url)
       .map((response: Response) => {
-        if (this.app.isLoading) {
-          this.app.spinner.setAttribute('hidden', true);
-          this.app.container.removeAttribute('hidden');
-          this.app.isLoading = false;
-        }
+        this.stopLoadSpinner();
 
-        return context.extractData(response);
+        return context._extractData(response);
       })
       .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   };
 
-  extractData(response: Response) {
+  stopLoadSpinner(): void {
+    if (this.app.isLoading) {
+      this.app.spinner.setAttribute('hidden', true);
+      this.app.container.removeAttribute('hidden');
+      this.app.isLoading = false;
+    }
+  }
+
+  private _extractData(response: Response) {
     let body = response.json();
 
     return body || {};

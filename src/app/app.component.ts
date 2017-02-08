@@ -15,11 +15,23 @@ export class AppComponent {
 
   ngOnInit() {
     this.userService.init();
-    
+
     this.search$
       .subscribe(forecast => this.getUser(forecast));
 
-    this.getUser(this.userService.initialUser.login);
+    this.initialLoad();
+  }
+
+  initialLoad() {
+    let prevSelectedUsers = this.checkSavedUsers();
+
+    if (prevSelectedUsers) {
+      this.userService.stopLoadSpinner();
+
+      this.cards = JSON.parse(prevSelectedUsers);
+    } else {
+      this.getUser(this.userService.initialUser.login, true);
+    }
   }
 
   onAddUser(user) {
@@ -43,19 +55,41 @@ export class AppComponent {
     }, this);
   };
 
+  /************************************************************************
+     * NOTE: To simplify this codelab, we've used localStorage.
+     *   localStorage is a synchronous API and has serious performance
+     *   implications. It should not be used in production applications!
+     ************************************************************************/
+
+  // Cache the users in the apps cards array
+  saveUsers() {
+    let selectedUsers = JSON.stringify(this.cards);
+
+    localStorage.setItem('selectedUsers', selectedUsers);
+  }
+
+  // Check localStorage for previously saved cards
+  checkSavedUsers() {
+    return localStorage.getItem('selectedUsers');
+  }
+
   getFreshUserData(username: string): Subject<User> {
     return this.userService.getUser(username)
   }
 
-  getUser(username: string): Array<User> {
-    return this.userService.getUser(username)
+  getUser(username: string, initial?: boolean): Array<User> {
+    return this.userService.getUser(username, initial)
       .subscribe(results => {
         let uniqUsers = this.cards.every(item => {
           return item.id !== results.id;
         });
 
         if (uniqUsers)
-          return this.cards.push(results);
+          this.cards.push(results);
+
+          this.saveUsers();
+
+          return this.cards;
       });
   }
 
