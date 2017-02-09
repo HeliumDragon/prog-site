@@ -3,18 +3,18 @@ var dataCacheName = 'githubUser-v1';
 var filesToCache = [
   '/prog-site/',
   '/prog-site/index.html',
-  '/styles.bundle.css',
-  '/inline.bundle.js',
-  '/vendor.bundle.js',
-  '/main.bundle.js',
-  '/assets/images/ic_add_white_24px.svg',
-  '/assets/images/ic_refresh_white_24px.svg',
-  '/assets/images/icons/icon-32x32.png',
-  '/assets/images/icons/icon-128x128.png',
-  '/assets/images/icons/icon-144x144.png',
-  '/assets/images/icons/icon-152x152.png',
-  '/assets/images/icons/icon-192x192.png',
-  '/assets/images/icons/icon-256x256.png'
+  '/prog-site/styles.bundle.css',
+  '/prog-site/inline.bundle.js',
+  '/prog-site/vendor.bundle.js',
+  '/prog-site/main.bundle.js',
+  '/prog-site/assets/images/ic_add_white_24px.svg',
+  '/prog-site/assets/images/ic_refresh_white_24px.svg',
+  '/prog-site/assets/images/icons/icon-32x32.png',
+  '/prog-site/assets/images/icons/icon-128x128.png',
+  '/prog-site/assets/images/icons/icon-144x144.png',
+  '/prog-site/assets/images/icons/icon-152x152.png',
+  '/prog-site/assets/images/icons/icon-192x192.png',
+  '/prog-site/assets/images/icons/icon-256x256.png'
 ];
 
 self.addEventListener('install', function(e) {
