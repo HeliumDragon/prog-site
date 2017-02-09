@@ -5,10 +5,10 @@ module.exports = {
   staticFileGlobs: [
     'dist/index.html',
     'dist/**.js',
-    'dist/**.json',
     'dist/**.css',
     'dist/assets/images/**/*.png',
-    'dist/assets/images/**/*.svg'
+    'dist/assets/images/**/*.svg',
+    'dist/assets/manifests/**.json'
   ],
   runtimeCaching: [
     {
