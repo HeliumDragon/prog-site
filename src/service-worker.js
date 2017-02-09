@@ -1,8 +1,8 @@
 var cacheName = 'githubUserPWA';
 var dataCacheName = 'githubUser-v1';
 var filesToCache = [
-  '/',
-  '/index.html',
+  '/prog-site/',
+  '/prog-site/index.html',
   '/styles.bundle.css',
   '/inline.bundle.js',
   '/vendor.bundle.js',
