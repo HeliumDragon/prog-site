@@ -5,7 +5,9 @@ module.exports = {
   staticFileGlobs: [
     'dist/index.html',
     'dist/**.js',
-    'dist/**.css'
+    'dist/**.css',
+    'dist/assets/images/**/*.png',
+    'dist/assets/images/**/*.svg'
   ],
   runtimeCaching: [
     {
