@@ -9,6 +9,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/of';
 
+/// <reference types="service_worker_api" />
+
 @Injectable()
 export class UserService {
   /*
