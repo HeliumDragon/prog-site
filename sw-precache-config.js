@@ -1,6 +1,7 @@
 module.exports = {
   navigateFallback: '/index.html',
-  stripPrefix: 'dist',
+  //stripPrefix: 'dist',
+  replacePrefix: 'prog-site',
   root: 'dist/',
   staticFileGlobs: [
     'dist/index.html',
