@@ -1,0 +1,13 @@
+<div *ngFor="let card of cards">
+  <a [routerLink]="['users', card.id]">
+    <app-card [name]="card.name"
+              [location]="card.location"
+              [bio]="card.bio"
+              [company]="card.company"
+              [avatar]="card.avatar_url"
+              [date]="card.created_at"
+              >
+    </app-card>
+  </a>
+</div>
+<app-dialog (addUser)="onAddUser($event)"></app-dialog>

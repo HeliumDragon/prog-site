@@ -11,6 +11,10 @@ import { UserService } from './user.service';
 import { DialogComponent } from './dialog/dialog.component';
 import { CardComponent } from './card/card.component';
 import { OneDayComponent } from './one-day/one-day.component';
+import { HomeComponent } from './home/home.component';
+
+import { routing } from './app.routing';
+import { CardDetailsComponent } from './card/card-details/card-details.component';
 
 @NgModule({
   declarations: [
@@ -19,10 +23,13 @@ import { OneDayComponent } from './one-day/one-day.component';
     LoaderComponent,
     DialogComponent,
     CardComponent,
-    OneDayComponent
+    OneDayComponent,
+    HomeComponent,
+    CardDetailsComponent
   ],
   imports: [
     BrowserModule,
+    routing,
     FormsModule,
     HttpModule
   ],

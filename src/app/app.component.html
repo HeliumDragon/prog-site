@@ -2,19 +2,16 @@
   <app-header (onRefresh)="onRefresh($event)"></app-header>
 
   <main class="main">
-    <div *ngFor="let card of cards">
-      <app-card [name]="card.name"
-                [location]="card.location"
-                [bio]="card.bio"
-                [company]="card.company"
-                [avatar]="card.avatar_url"
-                [date]="card.created_at"
-                >
-      </app-card>
-    </div>
-  </main>
+    <nav class="main-navigation">
+      <a [routerLink]="['']"
+         routerLinkActive="active"
+         id="homeButton"
+         class="homeButton"
+         aria-label="home">Home</a>
+    </nav>
 
-  <app-dialog (addUser)="onAddUser($event)"></app-dialog>
+    <router-outlet></router-outlet>
+  </main>
 
   <app-loader></app-loader>
 </div>

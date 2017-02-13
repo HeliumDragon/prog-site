@@ -21,7 +21,13 @@ padding-top: 60px;
         flex: 1;
 overflow-x: hidden;
 overflow-y: auto;
--webkit-overflow-scrolling: touch; }
+-webkit-overflow-scrolling: touch;
+}
+
+.main .main-navigation {
+  background-color: #444;
+  padding: 10px 15px;
+}
 
 @media (max-width: 450px) {
 
@@ -72,4 +78,9 @@ overflow-y: auto;
   .mdl-button--primary.mdl-button--primary.mdl-button--raised, .mdl-button--primary.mdl-button--primary.mdl-button--fab {
     color: white;
     background-color: #3f51b5; }
+}
+
+.homeButton {
+  text-decoration: none;
+  color: white;
 }
