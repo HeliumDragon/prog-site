@@ -1,3 +1,19 @@
-<p>
-  card-details works!
-</p>
+<div>
+  <h1>
+    <a href="{{card?.url}}"
+       title="{{card?.name}}"
+       target="_blank">
+      {{card?.name}}
+    </a>
+  </h1>
+
+  <h2>Location: {{card?.location}}</h2>
+
+  <h3 *ngIf="card?.company">Company: {{card?.company}}</h3>
+
+  <h3>Following: {{card?.following}}</h3>
+
+  <h3>Followers: {{card?.followers}}</h3>
+
+  <p></p>
+</div>

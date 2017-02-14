@@ -4,7 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { CardDetailsComponent } from './card/card-details/card-details.component';
 
 const APP_ROUTES: Routes = [
-  { path: 'users/:id', component: CardDetailsComponent},
+  { path: 'users/:userName', component: CardDetailsComponent},
   { path: '', component: HomeComponent }
 ];
 

@@ -26,7 +26,6 @@ export class HeaderComponent {
   refresh () {
     // Refresh all of the forecasts
     this.onRefresh.emit(true);
-    //this.userService.updateUsers();
   };
 
   add() {
