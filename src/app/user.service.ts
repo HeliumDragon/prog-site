@@ -19,7 +19,7 @@ export class UserService {
    */
   initialUser: User = {
     login: "octocat",
-    id: 1,
+    id: 583231,
     avatar_url: "https://avatars.githubusercontent.com/u/583231?v=3",
     gravatar_id: "",
     url: "https://api.github.com/users/octocat",
@@ -103,6 +103,12 @@ export class UserService {
       this.app.container.removeAttribute('hidden');
       this.app.isLoading = false;
     }
+  }
+
+  updateUsers(users) {
+    return users.map((user, index) => {
+      return this.getUser(user.login);
+    });
   }
 
   private _extractData(response: Response) {

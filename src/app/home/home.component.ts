@@ -5,7 +5,12 @@ import { User } from '../user';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styles: []
+  styles: [`
+    .card-link {
+      text-decoration: none;
+      color: #444;
+    }
+  `]
 })
 export class HomeComponent {
   cards: Array<User> = [];
@@ -16,7 +21,7 @@ export class HomeComponent {
     this.userService.init();
 
     this.search$
-      .subscribe(forecast => this.getUser(forecast));
+      .subscribe(user => this.getUser(user));
 
     this.initialLoad();
   }
@@ -37,21 +42,17 @@ export class HomeComponent {
     this.getUser(user);
   }
 
-  onRefresh(refresh) {
-    if (refresh)
-      this.updateUsers();
-  };
-
   // Iterate all of the cards and attempt to get the latest user data
   updateUsers() {
-    let cards = this.cards;
-
-    cards.forEach((user, index) => {
-      let updatedUser = this.getFreshUserData(user.login)
-        .subscribe(result => {
-          cards[index] = result;
-        });
-    }, this);
+    this.userService.updateUsers(this.cards).forEach(user => {
+      user.subscribe(result => {
+        this.cards.forEach(card => {
+          if (result.id === card.id) {
+            card = result;
+          }
+        })
+      });
+    });
   };
 
   /************************************************************************

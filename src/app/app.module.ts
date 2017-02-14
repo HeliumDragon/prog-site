@@ -10,7 +10,6 @@ import { LoaderComponent } from './loader/loader.component';
 import { UserService } from './user.service';
 import { DialogComponent } from './dialog/dialog.component';
 import { CardComponent } from './card/card.component';
-import { OneDayComponent } from './one-day/one-day.component';
 import { HomeComponent } from './home/home.component';
 
 import { routing } from './app.routing';
@@ -23,7 +22,6 @@ import { CardDetailsComponent } from './card/card-details/card-details.component
     LoaderComponent,
     DialogComponent,
     CardComponent,
-    OneDayComponent,
     HomeComponent,
     CardDetailsComponent
   ],

@@ -1,5 +1,6 @@
 <div *ngFor="let card of cards">
-  <a [routerLink]="['users', card.id]">
+  <a [routerLink]="['users', card.id]"
+     class="card-link">
     <app-card [name]="card.name"
               [location]="card.location"
               [bio]="card.bio"

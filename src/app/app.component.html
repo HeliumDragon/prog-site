@@ -10,7 +10,7 @@
          aria-label="home">Home</a>
     </nav>
 
-    <router-outlet></router-outlet>
+    <router-outlet (activate)='onActivate($event)'></router-outlet>
   </main>
 
   <app-loader></app-loader>

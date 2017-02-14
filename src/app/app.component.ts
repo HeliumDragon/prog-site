@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-
-import { User } from './user';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +7,15 @@ import { User } from './user';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  private _viewComponent;
+
+  onRefresh(refresh) {
+    if (refresh) this._viewComponent.updateUsers();
+  }
+
+  onActivate(routeOutlet) {
+    setTimeout(() => this._viewComponent = routeOutlet, 0);
+  }
+
   constructor() {}
 }

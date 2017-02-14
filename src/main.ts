@@ -13,7 +13,7 @@ import { AppModule } from './app/app.module';
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
-           .register('/prog-site/service-worker.js')
+           .register('/service-worker.js')
            .then(function() { console.log('Service Worker Registered');
          });
 }
