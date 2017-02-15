@@ -1,12 +1,15 @@
 <div class="card cardTemplate user-details">
     <div class="card-last-updated"></div>
     <div class="name">{{name}}</div>
-    <div class="location">{{location}}</div>
+
     <div class="current">
       <div class="visual">
-        <div class="icon"><img src="{{avatar}}" [alt]="description"/></div>
+        <div class="icon"><img src="{{avatar}}" [alt]="name"/></div>
       </div>
       <div class="description">
+        <div class="location">
+          Location: {{location}}
+        </div>
         <div class="date">
           Since: {{date | date: 'MM/yyyy'}}
         </div>

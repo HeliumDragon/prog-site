@@ -20,10 +20,20 @@ export class CardDetailsComponent implements OnInit {
   getUser() {
     this.userService.getUser(this.userName)
       .subscribe(result => {
-        console.log(result);
         this.card = result;
       });
   }
+
+  // Use card and attempt to get the latest user data
+  updateUsers() {
+    this.userService.updateUsers([this.card]).forEach(user => {
+      user.subscribe(result => {
+          if (result.id === this.card.id) {
+            this.card = result;
+          }
+        })
+    });
+  };
 
   constructor(
     @Inject('user') private userService,

@@ -7,87 +7,87 @@
   margin: 16px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12); }
 
-  .user-details .location, .user-details .name {
-    font-size: 1.5em; }
+.user-details .name {
+  font-size: 1.5em; }
 
-  .user-details .date, .user-details .bio {
-    font-size: 1em; }
+.user-details .date, .user-details .bio, .user-details .location {
+  font-size: 1em; }
 
-  .user-details .current {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex; }
-  .user-details .current .icon {
-    width: 128px;
-    height: 128px; }
-  .user-details .current .visual {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    font-size: 4em; }
-  .user-details .current .visual .scale {
-    font-size: 0.5em;
-    vertical-align: super; }
-  .user-details .current .visual, .user-details .current .description {
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1; }
-  .user-details .current .sunset:before {
-    content: "Sunset: ";
-    color: #888; }
-  .user-details .current .wind:before {
-    content: "Wind: ";
-    color: #888; }
-  .user-details .current .sunrise:before {
-    content: "Sunrise: ";
-    color: #888; }
-  .user-details .current .humidity:before {
-    content: "Humidity: ";
-    color: #888; }
-  .user-details .current .pollen:before {
-    content: "Pollen Count: ";
-    color: #888; }
-  .user-details .current .pcount:before {
-    content: "Pollen ";
-    color: #888; }
-
-  .user-details .future {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex; }
-  .user-details .future .oneday {
+.user-details .current {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+.user-details .current .icon {
+  width: 128px;
+  height: 128px; }
+.user-details .current .visual {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 4em; }
+.user-details .current .visual .scale {
+  font-size: 0.5em;
+  vertical-align: super; }
+.user-details .current .visual, .user-details .current .description {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
       -ms-flex-positive: 1;
-          flex-grow: 1;
-  text-align: center; }
-  .user-details .future .oneday .icon {
-    width: 64px;
-    height: 64px;
-    margin-left: auto;
-    margin-right: auto; }
-  .user-details .future .oneday .temp-high, .user-details .future .oneday .temp-low {
-    display: inline-block; }
-  .user-details .future .oneday .temp-low {
-    color: #888; }
+          flex-grow: 1; }
+.user-details .current .sunset:before {
+  content: "Sunset: ";
+  color: #888; }
+.user-details .current .wind:before {
+  content: "Wind: ";
+  color: #888; }
+.user-details .current .sunrise:before {
+  content: "Sunrise: ";
+  color: #888; }
+.user-details .current .humidity:before {
+  content: "Humidity: ";
+  color: #888; }
+.user-details .current .pollen:before {
+  content: "Pollen Count: ";
+  color: #888; }
+.user-details .current .pcount:before {
+  content: "Pollen ";
+  color: #888; }
 
-  .user-details .icon {
-    background-repeat: no-repeat;
-    background-size: contain; }
+.user-details .future {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex; }
+.user-details .future .oneday {
+-webkit-box-flex: 1;
+-webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+        flex-grow: 1;
+text-align: center; }
+.user-details .future .oneday .icon {
+  width: 64px;
+  height: 64px;
+  margin-left: auto;
+  margin-right: auto; }
+.user-details .future .oneday .temp-high, .user-details .future .oneday .temp-low {
+  display: inline-block; }
+.user-details .future .oneday .temp-low {
+  color: #888; }
 
-  @media (max-width: 450px) {
-  .user-details .date, .user-details .description {
-      font-size: 0.9em; }
-  .user-details .current .icon {
-    width: 96px;
-    height: 96px; }
-  .user-details .current .visual {
-    font-size: 3em; }
-  .user-details .future .oneday .icon {
-    width: 32px;
-    height: 32px; }
-  }
+.user-details .icon {
+  background-repeat: no-repeat;
+  background-size: contain; }
+
+@media (max-width: 450px) {
+.user-details .date, .user-details .description {
+    font-size: 0.9em; }
+.user-details .current .icon {
+  width: 96px;
+  height: 96px; }
+.user-details .current .visual {
+  font-size: 3em; }
+.user-details .future .oneday .icon {
+  width: 32px;
+  height: 32px; }
+}
