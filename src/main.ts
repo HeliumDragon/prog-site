@@ -5,6 +5,8 @@ import { enableProdMode } from '@angular/core';
 import { environment } from './environments/environment';
 import { AppModule } from './app/app.module';
 
+declare let navigator: any;
+
 /// <reference path="../typings/globals/service_worker_api/index.d.ts" />
 
 //if (environment.production) {
